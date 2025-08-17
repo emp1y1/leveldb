@@ -1,5 +1,9 @@
-#!name=酷我
-
+#!name=酷我音乐[VIP+净化]
+#!desc=解锁VIP歌曲、听书、装扮，全面净化广告
+#!author=@ddgksf2013
+#!homepage=https://t.me/ddgksf2021
+#!icon=https://raw.githubusercontent.com/ddgksf2013/Cuttlefish/master/Icon/kuwo.png
+#!version=2.0.46
 
 [Rule]
 # 屏蔽广告域名
