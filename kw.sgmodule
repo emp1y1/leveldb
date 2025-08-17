@@ -1,0 +1,62 @@
+#!name=酷我
+
+
+[Rule]
+# 屏蔽广告域名
+DOMAIN-SUFFIX,mobilead.kuwo.cn,REJECT
+DOMAIN-SUFFIX,rich.kuwo.cn,REJECT
+
+[URL Rewrite]
+# 通用广告请求
+^https?:\/\/vip1\.kuwo\.cn\/vip\/activity\/kwMemberDay - reject
+^https?:\/\/mc\.tencentmusic\.com\/sdk\/ad - reject
+^https://.*kuwo.cn/AdSystem - reject
+^https://.*kuwo.cn/openapi/v1/user/freemium/global/text - reject
+^https?:\/\/hotword\.kuwo\.cn\/hotword\.s - reject
+^https?:\/\/vip1\.kuwo\.cn\/vip_adv\/ - reject
+^https?:\/\/wapi\.kuwo\.cn\/openapi\/v1\/app\/pasterAdvert - reject
+^https?:\/\/mobilead\.kuwo\.cn\/ - reject
+^https?:\/\/rich\.kuwo\.cn\/AdService - reject
+
+[Script]
+# 搜索框处理
+kuwo_search = type=http-response,pattern=^https?:\/\/searchrecterm\.kuwo\.cn\/recterm\.s,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 会员页广告
+kuwo_vip_cells = type=http-response,pattern=^https?:\/\/appi\.kuwo\.cn\/kuwopay\/vip-tab\/page\/cells,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 会员页顶部广告tab
+kuwo_vip_setting = type=http-response,pattern=^https?:\/\/appi\.kuwo\.cn\/kuwopay\/vip-tab\/setting,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 数字专辑
+kuwo_music_pay_newver = type=http-response,pattern=^https?:\/\/musicpay\.kuwo\.cn\/music\.pay\?newver,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 听书权限接口1
+kuwo_audiobook1 = type=http-response,pattern=^https?:\/\/[a-z0-9A-Z]+\.(kuwo|lrts)\.(cn|me)\/a\.p,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 听书权限接口2
+kuwo_audiobook2 = type=http-response,pattern=^https?:\/\/.*\.kuwo\.cn\/v2\/api\/pay\/vip\/extraVipStatus,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 新版vip接口1
+kuwo_vip_ui = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/enc\/user\/vip\?op=ui,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 新版vip接口2
+kuwo_vip_get = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/userbase\/vip\?op=get,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 旧版vip接口
+kuwo_old_vip = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/user\/vip\?(uid|op=ui),requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 皮肤解锁
+kuwo_theme = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/theme,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 下载接口
+kuwo_download = type=http-request,pattern=^https?:\/\/musicpay\.kuwo\.cn\/music\.pay\?ui,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 我的页面卡片
+kuwo_personal = type=http-response,pattern=^https?:\/\/appi.kuwo.cn\/kuwopay\/personal\/cells,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+# 音乐播放接口
+kuwo_play = type=http-response,pattern=^https:\/\/[a-z0-9A-Z]+\.kuwo\.cn\/mobi\.s\?f=kwxs,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+
+[MITM]
+hostname = %APPEND% *.kuwo.cn, *.lrts.me, mc.tencentmusic.com
