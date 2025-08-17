@@ -1,66 +1,300 @@
-#!name=酷我音乐[VIP+净化]
-#!desc=解锁VIP歌曲、听书、装扮，全面净化广告
-#!author=@ddgksf2013
-#!homepage=https://t.me/ddgksf2021
-#!icon=https://raw.githubusercontent.com/ddgksf2013/Cuttlefish/master/Icon/kuwo.png
-#!version=2.0.46
+#!name=酷我音乐解锁
+#!desc=酷我音乐去广告及VIP功能解锁
+#!openUrl=https://github.com/ddgksf2013
+#!author=ddgksf2013
+#!homepage=https://github.com/ddgksf2013
+#!icon=https://raw.githubusercontent.com/ddgksf2013/Cuttlefish/master/Icon/Kuwo.png
 
 [Rule]
-# 屏蔽广告域名
-DOMAIN-SUFFIX,mobilead.kuwo.cn,REJECT
-DOMAIN-SUFFIX,rich.kuwo.cn,REJECT
-
-[URL Rewrite]
-# 通用广告请求
-^https?:\/\/vip1\.kuwo\.cn\/vip\/activity\/kwMemberDay - reject
-^https?:\/\/mc\.tencentmusic\.com\/sdk\/ad - reject
-^https://.*kuwo.cn/AdSystem - reject
-^https://.*kuwo.cn/openapi/v1/user/freemium/global/text - reject
-^https?:\/\/hotword\.kuwo\.cn\/hotword\.s - reject
-^https?:\/\/vip1\.kuwo\.cn\/vip_adv\/ - reject
-^https?:\/\/wapi\.kuwo\.cn\/openapi\/v1\/app\/pasterAdvert - reject
-^https?:\/\/mobilead\.kuwo\.cn\/ - reject
-^https?:\/\/rich\.kuwo\.cn\/AdService - reject
+# 屏蔽广告请求
+URL-REGEX,^https?:\/\/vip1\.kuwo\.cn\/vip\/activity\/kwMemberDay,REJECT
+URL-REGEX,^https?:\/\/mc\.tencentmusic\.com\/sdk\/ad,REJECT
+URL-REGEX,^https:\/\/.*kuwo.cn\/AdSystem,REJECT
+URL-REGEX,^https:\/\/.*kuwo.cn\/openapi\/v1\/user\/freemium\/global\/text,REJECT
+URL-REGEX,^https?:\/\/hotword\.kuwo\.cn\/hotword\.s,REJECT
+URL-REGEX,^https?:\/\/vip1\.kuwo\.cn\/vip_adv\/,REJECT
+URL-REGEX,^https?:\/\/wapi\.kuwo\.cn\/openapi\/v1\/app\/pasterAdvert,REJECT
+URL-REGEX,^https?:\/\/mobilead\.kuwo\.cn\/,REJECT
+URL-REGEX,^https?:\/\/rich\.kuwo\.cn\/AdService,REJECT
 
 [Script]
 # 搜索框处理
-kuwo_search = type=http-response,pattern=^https?:\/\/searchrecterm\.kuwo\.cn\/recterm\.s,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-search = type=http-response,pattern=^https?:\/\/searchrecterm\.kuwo\.cn\/recterm\.s,requires-body=1,script-path=kuwo-unlock.js
 # 会员页广告
-kuwo_vip_cells = type=http-response,pattern=^https?:\/\/appi\.kuwo\.cn\/kuwopay\/vip-tab\/page\/cells,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-vip-ads = type=http-response,pattern=^https?:\/\/appi\.kuwo\.cn\/kuwopay\/vip-tab\/page\/cells,requires-body=1,script-path=kuwo-unlock.js
 # 会员页顶部广告tab
-kuwo_vip_setting = type=http-response,pattern=^https?:\/\/appi\.kuwo\.cn\/kuwopay\/vip-tab\/setting,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-vip-tab = type=http-response,pattern=^https?:\/\/appi\.kuwo\.cn\/kuwopay\/vip-tab\/setting,requires-body=1,script-path=kuwo-unlock.js
 # 数字专辑
-kuwo_music_pay_newver = type=http-response,pattern=^https?:\/\/musicpay\.kuwo\.cn\/music\.pay\?newver,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-album = type=http-response,pattern=^https?:\/\/musicpay\.kuwo\.cn\/music\.pay\?newver,requires-body=1,script-path=kuwo-unlock.js
 # 听书权限接口1
-kuwo_audiobook1 = type=http-response,pattern=^https?:\/\/[a-z0-9A-Z]+\.(kuwo|lrts)\.(cn|me)\/a\.p,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-audio1 = type=http-response,pattern=^https?:\/\/[a-z0-9A-Z]+\.(kuwo|lrts)\.(cn|me)\/a\.p,requires-body=1,script-path=kuwo-unlock.js
 # 听书权限接口2
-kuwo_audiobook2 = type=http-response,pattern=^https?:\/\/.*\.kuwo\.cn\/v2\/api\/pay\/vip\/extraVipStatus,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-audio2 = type=http-response,pattern=^https?:\/\/.*\.kuwo\.cn\/v2\/api\/pay\/vip\/extraVipStatus,requires-body=1,script-path=kuwo-unlock.js
 # 新版vip接口1
-kuwo_vip_ui = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/enc\/user\/vip\?op=ui,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-vip1 = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/enc\/user\/vip\?op=ui,requires-body=1,script-path=kuwo-unlock.js
 # 新版vip接口2
-kuwo_vip_get = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/userbase\/vip\?op=get,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-vip2 = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/userbase\/vip\?op=get,requires-body=1,script-path=kuwo-unlock.js
 # 旧版vip接口
-kuwo_old_vip = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/user\/vip\?(uid|op=ui),requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-vip-old = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/user\/vip\?(uid|op=ui),requires-body=1,script-path=kuwo-unlock.js
 # 皮肤解锁
-kuwo_theme = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/theme,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-theme = type=http-response,pattern=^https?:\/\/vip1\.kuwo\.cn\/vip\/v2\/theme,requires-body=1,script-path=kuwo-unlock.js
 # 下载接口
-kuwo_download = type=http-request,pattern=^https?:\/\/musicpay\.kuwo\.cn\/music\.pay\?ui,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-download = type=http-request,pattern=^https?:\/\/musicpay\.kuwo\.cn\/music\.pay\?ui,requires-body=0,script-path=kuwo-unlock.js
 # 我的页面卡片
-kuwo_personal = type=http-response,pattern=^https?:\/\/appi.kuwo.cn\/kuwopay\/personal\/cells,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
-
+kuwo-personal = type=http-response,pattern=^https?:\/\/appi.kuwo.cn\/kuwopay\/personal\/cells,requires-body=1,script-path=kuwo-unlock.js
 # 音乐播放接口
-kuwo_play = type=http-response,pattern=^https:\/\/[a-z0-9A-Z]+\.kuwo\.cn\/mobi\.s\?f=kwxs,requires-body=1,max-size=0,script-path=https://gist.githubusercontent.com/ddgksf2013/0f76e952f0c4a2579932f45a209b40c3/raw/mykkmusic.vip.js
+kuwo-play = type=http-response,pattern=^https:\/\/[a-z0-9A-Z]+\.kuwo\.cn\/mobi\.s\?f=kwxs,requires-body=1,script-path=kuwo-unlock.js
 
 [MITM]
-hostname = %APPEND% *.kuwo.cn, *.lrts.me, mc.tencentmusic.com
+hostname = *.kuwo.cn, *.lrts.me, mc.tencentmusic.com
+
+[Script]
+kuwo-unlock.js = type=http-response,script-path=inline,argument=
+/**
+ * 酷我音乐解锁脚本 for Shadowrocket
+ * 原作者: ddgksf2013
+ * 适配版本: Shadowrocket
+ */
+
+const version = 'V1.0.17';
+
+// 获取请求信息
+const url = $request.url;
+const method = $request.method;
+let body = $response.body;
+
+// 工具函数
+function showMonthlyPopup() {
+    const currentMonth = new Date().getMonth();
+    const lastPopupMonth = $persistentStore.read('KuwoMonthlyPopup');
+    
+    if (lastPopupMonth === null || lastPopupMonth != currentMonth) {
+        $notification.post(
+            '酷我音乐解锁',
+            '',
+            '请不要在AppStore中升级酷我音乐，更新后脚本将失效。',
+            {'open-url': 'https://apps.apple.com/cn/app/id588673713'}
+        );
+        $persistentStore.write(currentMonth.toString(), 'KuwoMonthlyPopup');
+    }
+}
+
+// 处理下载接口的特殊逻辑
+if (url.indexOf('music.pay?ui') !== -1) {
+    (async () => {
+        try {
+            let KwMusicKey = $persistentStore.read('Kw_MusicKey');
+            let newBody = await $httpClient.get({
+                url: 'https://yiyuanapp.kuwo.cn/v2/api/pay/user/info?op=get&uid=' + KwMusicKey
+            });
+            
+            $done({ body: newBody.body });
+            showMonthlyPopup();
+        } catch (error) {
+            console.log('error: ' + error);
+        }
+    })();
+} else if (/a\.p/.test(url)) {
+    // 听书权限处理
+    let match = body.match(/id":(\d+)/);
+    let id = match ? match[1] : null;
+    
+    if (!id) {
+        id = $response.body.replace(/.*?"id":(\d+).*/, '$1');
+    }
+    
+    if (id) {
+        $persistentStore.write(id, 'Kw_MusicKey');
+    }
+    
+    body = $response.body
+        .replace(/"type":\d*/g, '"type":2')
+        .replace(/"end":\d*/g, '"end":4000000000000')
+        .replace(/"period":\d*/g, '"period":4000000000000')
+        .replace(/"bought_vip":\d*/g, '"bought_vip":1')
+        .replace(/"bought_vip_end":\d*/g, '"bought_vip_end":4000000000000')
+        .replace(/"limitfree":\d*/g, '"limitfree":1')
+        .replace(/"playable":\d*/g, '"playable":1')
+        .replace(/"downable":\d*/g, '"downable":1')
+        .replace(/"playright":\d*/g, '"playright":1')
+        .replace(/"downright":\d*/g, '"downright":1')
+        .replace(/"policytype":\d*/g, '"policytype":1')
+        .replace(/"policy":\d*/g, '"policy":1');
+        
+} else if (/music\.pay/.test(url)) {
+    // 音乐播放权限处理
+    if (method == 'POST' && $response.body.includes('audio')) {
+        let obj = JSON.parse($response.body);
+        
+        obj.songs[0].audio.forEach(item => {
+            item.st = 0;
+        });
+        
+        $persistentStore.write(obj.songs[0].id.toString(), 'Kw_MusicKey');
+        
+        let audio = obj.songs[0].audio[0];
+        obj.songs[0] = {
+            'info': obj.songs[0],
+            'id': obj.songs[0].id,
+            'pid': audio.pid,
+            'price': audio.price,
+            'type': audio.policy,
+            'name': audio.policy + '_1',
+            'categray': audio.policy + '_1',
+            'order': 377487759,
+            'final': [],
+            'buy': 1657266601,
+            'begin': 1657266601,
+            'end': 4000000000,
+            'CurEnd': 0,
+            'playCnt': 0,
+            'playUpper': 300,
+            'downCnt': 0,
+            'downUpper': 300,
+            'playVideoCnt': 0,
+            'playVideoUpper': 3000,
+            'downVideoCnt': 0,
+            'downVideoUpper': 3000,
+            'period': 1000,
+            'feetype': 0
+        };
+        
+        body = JSON.stringify(obj);
+    }
+} else if (url.indexOf('kuwopay/vip-tab/page/cells') != -1) {
+    // 会员页广告处理
+    body = $response.body.replace(/<ad[^>]*>/g, '').replace(/(<userinfolabel)[^>]*>/g, '$1>');
+    
+} else if (url.indexOf('kuwopay/vip-tab/setting') != -1) {
+    // 会员页设置处理
+    body = $response.body.replace(/<ad[^>]*>/g, '').replace(/(<userinfolabel)[^>]*>/g, '$1>');
+    
+} else if (url.indexOf('searchrecterm.kuwo.cn') != -1) {
+    // 搜索框处理
+    let searchResult = { 'content': [{ 'query_word': '搜索', 'desc': '' }] };
+    body = JSON.stringify(searchResult);
+    
+} else if (url.indexOf('kuwopay/personal/cells') != -1) {
+    // 个人页面卡片处理
+    let obj = JSON.parse(body);
+    obj.data.cells = Object.values(obj.data.cells).filter(item => {
+        return !item.title.includes('卡');
+    });
+    body = JSON.stringify(obj);
+    
+} else if (url.indexOf('kuwopay/vip-tab/page/cells') != -1) {
+    // VIP页面处理
+    let obj = JSON.parse(body);
+    obj.data = Object.values(obj.data).filter(item => {
+        return item.type != 'AdvertBanner' && item.type != 'AdBanner';
+    });
+    
+    if (obj.data && obj.data[0]?.cells?.navId == '63bd4b1002539ab74ca789df') {
+        obj.data[0].cells.vipTypes = ['会员'];
+    }
+    
+    body = JSON.stringify(obj);
+    
+} else if (url.indexOf('kuwopay/vip-tab/setting') != -1) {
+    // VIP标签设置
+    let obj = JSON.parse(body);
+    if (obj.data?.vipTabbar?.vipTypes) {
+        obj.data.vipTabbar.vipTypes = [{
+            '_id': '63bd4b1002539ab74ca789df',
+            'title': '会员',
+            'type': 'vip',
+            'description': '会员',
+            'topics': [{
+                'mainBgColor': '#3C2D08',
+                'title': '精选',
+                'navId': '63bd4b1002539ab74ca789df',
+                'deputyBgColor': '#F9E9B8',
+                'url': 'pages/vip-tab-detail-list/index?navId=63bd4b1002539ab74ca789df'
+            }]
+        }];
+    }
+    body = JSON.stringify(obj);
+    
+} else if (url.indexOf('AdService') != -1) {
+    // 开屏广告处理
+    body = body.replace(/"url"/g, '"disabled_url"').replace(/last_time":\d+/g, 'last_time":0');
+    
+} else if (/vip\/v2\/theme/.test(url)) {
+    // 主题解锁
+    let obj = JSON.parse(body);
+    obj.data.vipTheme.type = 'free';
+    obj.data.needBuy = [];
+    body = JSON.stringify(obj);
+    
+} else if (/vip\/v2\/userbase\/vip/.test(url)) {
+    // 新版VIP接口处理
+    let obj = JSON.parse($response.body);
+    if (obj.data?.vipui) {
+        obj.data.vipui = {
+            'vipIcon': 'https://image.kuwo.cn/fe/f2d09ac0-b959-404f-86fa-dc65c715c0e96.png',
+            'iconJumpUrl': 'pages/vip/index',
+            'growthValue': '4000000000000',
+            'vipTag': '超级会员',
+            'vipOverSeasExpire': '0',
+            'time': '4000000000000',
+            'goSvipPage': '1',
+            'isNewUser': '1',
+            'vipmIcon': 'https://image.kuwo.cn/fe/34ad47f8-da7f-43e4-abdc-e6c995666368yyb.png',
+            'svipIcon': 'https://image.kuwo.cn/fe/556a2c15-8acf-4ac8-9dce-0d9958d2c756.png',
+            'vipmExpire': '4000000000000',
+            'biedSong': '0',
+            'luxuryIcon': 'https://image.kuwo.cn/fe/48adc412-78bb-4c9a-a47d-24c88e6f2ac1.png',
+            'userType': '3',
+            'isYearUser': '2',
+            'vip3Expire': '0',
+            'experienceExpire': '0',
+            'luxAutoPayUser': '2',
+            'biedAlbum': '1',
+            'vipLuxuryExpire': '4000000000000',
+            'vipmAutoPayUser': '2',
+            'svipAutoPayUser': '2',
+            'vipExpire': '4000000000000',
+            'svipExpire': '4000000000000'
+        };
+    }
+    
+    if (obj.data?.isVip) {
+        obj.data.isVip = '1';
+    }
+    
+    body = JSON.stringify(obj);
+    
+} else if (/vip\/v2\/user\/vip/.test(url)) {
+    // 旧版VIP接口处理
+    let obj = JSON.parse($response.body);
+    obj.data.isVip = '2';
+    obj.data.vipLuxuryExpire = '4000000000000';
+    obj.data.time = '1961170340993';
+    obj.data.isYearUser = '2';
+    obj.data.vipmExpire = '4000000000000';
+    obj.data.vipOverSeasExpire = '4000000000000';
+    obj.data.vipExpire = '4000000000000';
+    obj.data.svipExpire = '4000000000000';
+    body = JSON.stringify(obj);
+    
+} else if (/v2\/api\/pay\/vip\/extraVipStatus/.test(url)) {
+    // 听书VIP状态
+    let obj = JSON.parse(body);
+    obj.data.isVip = 1;
+    body = JSON.stringify(obj);
+    
+} else if (/music\.pay\?uid=.*/.test(url)) {
+    // 音乐支付重定向
+    let newUrl = url.replace(/uid=\d+/g, 'uid=1');
+    $done({ url: newUrl });
+    return;
+    
+} else if (/vip\/enc\/user/.test(url)) {
+    // 加密用户信息
+    body = 'Vo4m6X2hTph/vfpPmau8PTT0sFN6JCgzxSLVH/u3sbEt7VniYsVHbRFgOgN+Uvs39rAI7R3C5HVpaSj8tr8U8dLYwYdDCjMILuUorh3z0BiQToiWxudHkcASIPHNrmZHZYC/yv3DP4b89hbzfqU5UUDUqaZpEBZr76sDF2wNPmYjUEFSVCMGyTl1F6j1DBmKJ1Tik0YuG/2UBa/Ilz12a1KneXsNs5x5EE41bXDke7EygIB3I+6SoITZXOLFAFQFZujdI0GzClNglDKtclpUxpjN3uVeJxHLU40FTwNWo3ZDNv8KSdZpYZ5BDEOCyZkifmHlf1wnocX2zTr2xRAM6JhAD2WaSSNQQVJUI5lv72QNZSN43Pj/qdzatHQP4Pp/H1YxyP36rv3qBcnnJy/55YouIczRc3eJjXExRgo54qdyTYRMYoS9GzNn/edR3hSNnMn9PnElBCfZhkL0R5kZ9JBFCM3vNOy7Cnp6RVyAG0GFHv/g2q1yqkJxibyDro5nlnnvHjhZrsOvSvTXI1BBUlQjGoRqqCTDUvHLoiNwWMoKKfxtswWQiXjoQ6mL5dazxjUsbsHzC1N8YNMVtzf8gBryr3nMWS44wyUpi1/0WhGTRW1wsCllO1DB24+ibTFH/yftWN+/apM9vbQAkc/J+aFy/01plK7rsGNwWYYKG0sr6CS8dGQzy0On6aFo07hiU+wjUEFSVCOf/wKzzX5Cn/OLMKeVa1BPDxV5tm39vCrsxIG6T29VHWx8ck93S/nXCm2dHfojuLySZKJ50B1FaN5uFIY+LA1RbO/0sL+CoSJhoNOLibzt75c5dleW+lbwxLAAdBh5AFq4Z1Uj8bPjm5mHcGWQuBAyZIO+ie8wP4yvWwQFf1ENJiNQQVJUIzwCo22cpAtoAzYZWm3XFPfSlov4G15JGaaHL2X5FG5BTeUwwbBiQfwUpcb6oT8dbIKh2SsUZCeJZW43lLI0UIo9u3y1+P4GMtOKEZ7Sx0aQ3ewknthU2tpL0gnykFtiEtKBxcfHjJEen158zVXrbxxC0W35SmaYOOwgAmEMfxwHI1BBUlQjhVUHnBabnJcnmXCICcyUBglrZkXcNLwg91p4889vKFTLlzROHTt20UzjfKWsNK3U8pYgKYXPbQtSzIuRheEEQDFhLvEhIGKaB6yDoacDLJZ0jgFRIKKFBkbK0VE4nIABi1qgQOXvq1sG4QeupjfEWYqMX8EyyqPHrsDiCltAF1wjUEFSVCNybeUusnxJF2zswj8xQtfPiwfDj3TwKWxKXCmkheqHy7/0Qpyc84xWvq+YXktsU97wUZLHrgJmARudJmQNEwAweIdHMafcwreBy731z6kGLojy5TLgTN7XSm5Ar+hgOW+1ZwkWLyrVvaCdO/8/zdYl1w/PQUCs6dw0ThIeahwjpQ==';
+}
+
+// 如果不是下载接口，直接返回修改后的body
+if (url.indexOf('music.pay?ui') == -1) {
+    $done({ body: body });
+}
