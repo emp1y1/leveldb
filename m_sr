@@ -1,0 +1,8 @@
+#!name=MT点亮
+#!desc=
+
+[Script]
+api_modifier = type=http-response,pattern=^https:\/\/rights-apigw\.meituan\.com\/api\/rights\/activity\/secKill\/info,requires-body=1,script-path=https://raw.githubusercontent.com/emp1y1/leveldb/refs/heads/main/m.js,script-update-interval=0
+
+[MITM]
+hostname = rights-apigw.meituan.com
