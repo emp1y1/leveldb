@@ -5,7 +5,7 @@ try {
     let obj = JSON.parse(body);
 
     // 计算当前时间戳 + 20 分钟（秒）
-    let now = Math.floor(Date.now() / 1000) + 1800;
+    let now = Math.floor(Date.now() / 1000) + 1200;
 
     // 修改 currentTime
     if (obj?.data?.currentTime) {
